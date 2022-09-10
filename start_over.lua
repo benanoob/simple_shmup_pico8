@@ -93,4 +93,6 @@ function start_game()
 
 	end
 
+	particles = {}
+
 end

@@ -58,6 +58,18 @@ function draw_game()
 		circfill(ship.x + 4,ship.y-3, muzzle_flash, 9)
 	end
 
+	-- draw particles
+	for myp in all(particles) do
+		pset(myp.x,myp.y,9)
+		myp.x += myp.sx
+		myp.y += myp.sy
+		myp.age += 1
+
+		if myp.age > 20 + rnd(30) then
+			del(particles,myp)
+		end
+	end
+
 
 	-- UI
 	print("score="..score, 30, 1, 12)
@@ -199,6 +211,7 @@ function update_collision_bullets()
 			if col(bullet,enemy) then
 				sfx(2)
 				del(enemies,enemy)
+				explode(enemy.x,enemy.y)
 				del(bullets, bullet)
 				score += 1
 			end
@@ -206,11 +219,24 @@ function update_collision_bullets()
 	end
 end
 
-function explode(x, y, num, size)
-	explosions = {}
-	for i=1,num
-		rad = rnd(size)
-		x_e =
-		add(explosions, {})
+-- function explode(x, y, num, size)
+	-- explosions = {}
+	-- for i=1,num
+		-- rad = rnd(size)
+		-- x_e =
+		-- add(explosions, {})
+	-- end
+-- end
+
+function explode(expx,expy)
+
+	for i=1,20 do
+		local myp={}
+		myp.x = expx
+		myp.y = expy
+		myp.sx = rnd(8) - 4
+		myp.sy = rnd(8) - 4
+		myp.age = 0
+		add(particles,myp)
 	end
 end

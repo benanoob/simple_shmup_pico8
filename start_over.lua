@@ -34,7 +34,7 @@ function start_game()
 	ship.y = 64
 	ship.xspeed = 0
 	ship.yspeed = 0
-	ship.spr = 2
+	ship.spr = 64
 	ship.flame = 0
 
 
@@ -54,7 +54,7 @@ function start_game()
 
 
 	stars={}
-	for i=0, 100 do
+	for i=0, 80 do
 		local star={}
 		local color
 

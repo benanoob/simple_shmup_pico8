@@ -4,13 +4,13 @@ function update_game()
 
 	ship.xspeed = 0
 	ship.yspeed = 0
-	ship.spr = 2
+	ship.spr = 64
 
 
 	update_controls()
 
 	update_ship_position()
-	ship.flame = mod(ship.flame +1,3,5)
+	ship.flame = mod(ship.flame +0.35,3,6)
 
 	if invul>0 then
 		invul -=1
@@ -41,12 +41,12 @@ function draw_game()
 	starfield()
 
 	if invul <= 0 then
-		draw_obj(ship)
-		spr(ship.flame, ship.x, ship.y+8)
+		spr(ship.spr, ship.x, ship.y, 2,2)
+		spr(flr(ship.flame), ship.x+2, ship.y+15)
 	else
 		if sin(t/10) < -0.2 then
 			draw_obj(ship)
-			spr(ship.flame, ship.x, ship.y+8)
+			spr(ship.flame, ship.x, ship.y)
 		end
 	end
 
@@ -89,19 +89,16 @@ function draw_game()
 		end
 	end
 
-	-- print(enemies[0].spr)
-	-- print(invul)
-	-- print(invul==false)
 end
 
 function update_controls()
 	if btn(0) then
 		ship.xspeed = -2
-		ship.spr = 1
+		ship.spr = 68
 	end
 	if btn(1) then
 		ship.xspeed = 2
-		ship.spr = 3
+		ship.spr = 66
 	end
 	if btn(2) then
 		ship.yspeed = -2

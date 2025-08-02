@@ -1,8 +1,9 @@
 # todo
-- [] fix lag shot button
+- [x] fix lag shot button
 - [] broken asteroid ?
 - [] implement better explosions
 - [] improve basic bullet cause it sux rn
+- [] fix invul drawing
 
 # ideas
 - vertical hud
@@ -21,3 +22,5 @@
 - use custom color palette
 ## 01/08/2025
 - watch lazy shmup ep 15 better explosions
+## 02/08/2025
+- shot lag fixed

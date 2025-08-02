@@ -84,8 +84,8 @@ function start_game()
 	end
 
 	bullets = {}
-	fire_rate = 6
-	delay_next_shot = 1
+	fire_rate = 3
+	delay_next_shot = 0
 
 	enemies = {}
 	for i=1,12 do

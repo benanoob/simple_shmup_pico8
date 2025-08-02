@@ -2,7 +2,7 @@ function _init()
 	-- code to change palette
 	-- see https://nerdyteachers.com/PICO-8/Guide/?HIDDEN_PALETTE
 	-- and https://www.lexaloffle.com/bbs/?tid=35462
-	poke( 0x5f2e, 1 )
+	poke(0x5f2e, 1)
 	pal({[0]=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,141},1)
 
 	cls(0)

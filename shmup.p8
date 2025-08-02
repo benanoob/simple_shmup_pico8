@@ -1,10 +1,437 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-#include main.lua
-#include game.lua
-#include start_over.lua
-#include functions.lua
+-- #include main.lua
+-- #include game.lua
+-- #include start_over.lua
+-- #include functions.lua
+
+function update_over()
+	if btnp(4) or btnp(5) then
+		start_game()
+	end
+end
+
+function draw_over()
+	cls(2)
+
+	print("game over", 20,40, 6)
+	print("press action button to start again", 15,60, 5)
+end
+
+function update_start()
+	if btnp(4) or btnp(5) then
+		start_game()
+	end
+end
+
+function draw_start()
+	cls(0)
+
+	print("shmup 1", 20,40, 2)
+	print("press any button to start", 15,60, 5)
+
+end
+
+function start_game()
+	mode = "game"
+
+
+	ship = {}
+	ship.x = 64
+	ship.y = 64
+	ship.xspeed = 0
+	ship.yspeed = 0
+	ship.spr = 64
+	ship.flame = 0
+
+
+ x_bul = 64
+ y_bul = -10
+	speed_bul = 3
+	muzzle_flash = 0
+
+
+	score = 69
+	lives = 3
+	bombs = 2
+
+	invul = 0
+
+	t = 0
+
+
+	stars={}
+	for i=0, 80 do
+		local star={}
+		local color
+
+		star.x = flr(rnd(128))
+		star.y = flr(rnd(128))
+		star.speed = rnd(2)
+
+		if star.speed <= 0.3 then
+			color = 1
+		end
+		if star.speed > 0.3  and star.speed < 1 then
+			color = 6
+		elseif star.speed >= 1 then
+			color = 7
+		end
+		star.color = color
+		add(stars, star)
+	end
+
+
+	asteroids = {}
+	asteroids_x = {}
+	asteroids_y = {}
+	asteroids_speed = {}
+	for i=1,3 do
+		local asteroid = {x=rnd(127),y=-40,speed=rnd(0.8),spr=48}
+	end
+
+	bullets = {}
+	fire_rate = 3
+	delay_next_shot = 0
+
+	enemies = {}
+	for i=1,12 do
+		add(enemies, {x=i*8 + 10,y=20,spr=34})
+
+	end
+
+	particles = {}
+
+end
+
+function _init()
+	-- code to change palette
+	-- see https://nerdyteachers.com/PICO-8/Guide/?HIDDEN_PALETTE
+	-- and https://www.lexaloffle.com/bbs/?tid=35462
+	poke(0x5f2e, 1)
+	pal({[0]=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,141},1)
+
+	cls(0)
+
+	mode = "start"
+end
+
+function _update()
+
+	if mode == "game" then
+		update_game()
+	elseif mode == "start" then
+		update_start()
+	elseif mode == "over" then
+		update_over()
+	end
+end
+
+
+function _draw()
+
+	if mode == "game" then
+		draw_game()
+	elseif mode == "start" then
+		draw_start()
+	elseif mode == "over" then
+		draw_over()
+	end
+
+end
+
+function update_game()
+
+	t+=1
+
+	ship.xspeed = 0
+	ship.yspeed = 0
+	ship.spr = 64
+
+	if delay_next_shot>0 then
+		delay_next_shot -= 1
+	end
+	update_controls()
+
+	update_ship_position()
+	ship.flame = mod(ship.flame +0.35,3,6)
+
+	if invul>0 then
+		invul -=1
+	end
+
+	update_enemies()
+
+	update_bullets()
+	if muzzle_flash > 0 then
+		muzzle_flash = muzzle_flash - 1
+	end
+
+	update_collisions_edges()
+	update_collision_ship()
+	update_collision_bullets()
+
+	if lives <= 0 then mode = "over" end
+
+	animate_stars()
+
+	update_asteroids()
+end
+
+
+function update_controls()
+	if btn(0) then
+		ship.xspeed = -2
+		ship.spr = 68
+	end
+	if btn(1) then
+		ship.xspeed = 2
+		ship.spr = 66
+	end
+	if btn(2) then
+		ship.yspeed = -2
+	end
+	if btn(3) then
+		ship.yspeed = 2
+	end
+	if btnp(4) then
+		mode = "over"
+	end
+    if btn(5) then
+		if delay_next_shot == 0 then
+			local bullet = {x=ship.x+1, y=ship.y, spr=16}
+			add(bullets, bullet)
+			sfx(0)
+			muzzle_flash = 4
+			delay_next_shot = fire_rate
+		end
+    end
+end
+
+function animate_stars()
+	for star in all(stars) do
+		star.y = (star.y + star.speed) % 127
+	end
+end
+
+function update_bullets()
+	for bullet in all(bullets) do
+		bullet.y = bullet.y - speed_bul
+		if bullet.y < -20 then
+			del(bullets, bullet)
+		end
+	end
+end
+
+function update_ship_position()
+	ship.x = ship.x + ship.xspeed
+	ship.y = ship.y + ship.yspeed
+end
+
+function update_collisions_edges()
+	if ship.x >  120 then
+		ship.x = 120
+	end
+	if ship.x < 0 then
+		ship.x = 0
+	end
+    if ship.y >  120 then
+		ship.y = 120
+	end
+	if ship.y < 0 then
+		ship.y = 0
+	end
+end
+
+
+function update_asteroids()
+	for asteroid in all(asteroids) do
+		asteroid.y = asteroid.y + asteroid.speed
+		if asteroid.y > 127 then
+			asteroid.y = rnd(40) - 40
+			asteroid.speed = rnd(0.5)
+			asteroid.x = rnd(127)
+		end
+	end
+end
+
+
+
+function update_enemies()
+	for enemy in all(enemies) do
+		-- enemy.y += 0.4
+		enemy.spr = mod(enemy.spr+0.1,3,32)
+	end
+end
+
+function update_collision_ship()
+	for enemy in all(enemies) do
+		if col(ship, enemy) and invul==0 then
+			sfx(1)
+			lives -= 1
+			invul = 60
+			del(enemies, enemy)
+		end
+	end
+end
+
+function update_collision_bullets()
+	for bullet in all(bullets) do
+		for enemy in all(enemies) do
+			if col(bullet,enemy) then
+				sfx(2)
+				del(enemies,enemy)
+				explode(enemy.x,enemy.y)
+				del(bullets, bullet)
+				score += 1
+			end
+		end
+	end
+end
+
+-- function explode(x, y, num, size)
+	-- explosions = {}
+	-- for i=1,num
+		-- rad = rnd(size)
+		-- x_e =
+		-- add(explosions, {})
+	-- end
+-- end
+
+function explode(expx,expy)
+	for i=1,20 do
+		local myp={}
+		myp.x = expx
+		myp.y = expy
+		myp.sx = rnd(8) - 4
+		myp.sy = rnd(8) - 4
+		myp.age = 0
+		--
+		myp.size = rnd(5)
+		myp.agerate = 10
+		myp.child = 1
+		--
+		add(particles,myp)
+	end
+end
+
+
+
+
+-->8
+-- utils
+function draw_obj(obj)
+    spr(obj.spr, obj.x, obj.y)
+end
+
+function draw_array(array)
+    for obj in all(array) do
+        draw_obj(obj)
+    end
+end
+
+function mod(a,n,d)
+-- a modulo n offset d
+    return a - n * flr((a-d)/n)
+end
+
+
+function col(a,b)
+    local a_left = a.x
+    local a_right = a.x + 7
+    local a_top = a.y
+    local a_bottom = a.y + 7
+
+    local b_left = b.x
+    local b_right = b.x + 7
+    local b_top = b.y
+    local b_bottom = b.y + 7
+
+    if a_right < b_left then return false end
+    if a_left > b_right then return false end
+    if a_top > b_bottom then return false end
+    if a_bottom < b_top then return false end
+
+    return true
+end
+
+-->8
+-- drawing
+function draw_game()
+	cls(0)
+
+	draw_asteroids()
+	starfield()
+
+	if invul <= 0 then
+		spr(ship.spr, ship.x, ship.y, 2,2)
+		spr(flr(ship.flame), ship.x+2, ship.y+15)
+	else
+		if sin(t/10) < -0.2 then
+			draw_obj(ship)
+			spr(ship.flame, ship.x, ship.y)
+		end
+	end
+
+	draw_array(enemies)
+
+	draw_array(bullets)
+
+	if muzzle_flash > 0 then
+		circfill(ship.x + 4,ship.y-3, muzzle_flash, 9)
+	end
+
+	-- draw particles
+	for myp in all(particles) do
+		circfill(myp.x,myp.y,myp.size, 9)
+--		pset(myp.x,myp.y,9)
+		myp.x += myp.sx
+		myp.y += myp.sy
+		myp.age += 1
+	
+		if myp.age > 10 + rnd(30) then
+			del(particles,myp)
+		end
+	end
+
+	-- UI
+	print("score="..score, 30, 1, 12)
+	
+	for i=0,2 do
+		if lives>i then
+		spr(10,i*9+1,1)
+		else
+		spr(9,i*9+1,1)
+		end
+	end
+	for i=0,2 do
+		if bombs>i then
+		spr(25,101 + i*9,1)
+		else
+		spr(26,101 + i*9,1)
+		end
+	end
+
+end
+
+function draw_asteroids()
+	for asteroid in all(asteroids) do
+		draw_obj(asteroid)
+	end
+end
+
+
+function starfield()
+	for star in all(stars) do
+		if star.speed < 1.8 then
+			pset(star.x,star.y,star.color)
+		else
+			line(star.x,star.y,star.x,star.y-2, star.color)
+		end
+	end
+end
+
 
 __gfx__
 00000000000000000000000000000000000000000009000000080000000800000008000088800888888008880000000000000000000000000000000000000000

@@ -6,7 +6,9 @@ function update_game()
 	ship.yspeed = 0
 	ship.spr = 64
 
-
+	if delay_next_shot>0 then
+		delay_next_shot -= 1
+	end
 	update_controls()
 
 	update_ship_position()
@@ -110,12 +112,12 @@ function update_controls()
 		mode = "over"
 	end
     if btn(5) then
-		delay_next_shot = (delay_next_shot + 1) % fire_rate
 		if delay_next_shot == 0 then
-			local bullet = {x=ship.x, y=ship.y - 2, spr=16}
+			local bullet = {x=ship.x+1, y=ship.y, spr=16}
 			add(bullets, bullet)
 			sfx(0)
 			muzzle_flash = 4
+			delay_next_shot = fire_rate
 		end
     end
 end

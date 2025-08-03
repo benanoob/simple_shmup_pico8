@@ -1,8 +1,8 @@
 # todo
 - [x] fix lag shot button
 - [] broken asteroid ?
-- [] implement better explosions
-- [] improve basic bullet cause it sux rn
+- [x] implement better explosions
+- [x] improve basic bullet cause it sux rn
 - [] fix invul drawing
 
 # ideas
@@ -12,7 +12,7 @@
 - varied particles in size colors
 - big center explosion ball that pops and shrinks ?
 - particles spawning smaller particles ?
-- particles based on their speed ?
+- particles type based on their speed ?
 - shockwave effect (circle)
 
 
@@ -24,3 +24,5 @@
 - watch lazy shmup ep 15 better explosions
 ## 02/08/2025
 - shot lag fixed
+## 03/08/2025
+- finish explosions + shockwave

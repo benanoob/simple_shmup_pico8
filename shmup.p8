@@ -12,30 +12,14 @@ function update_over()
 	end
 end
 
-function draw_over()
-	cls(2)
-
-	print("game over", 20,40, 6)
-	print("press action button to start again", 15,60, 5)
-end
-
 function update_start()
 	if btnp(4) or btnp(5) then
 		start_game()
 	end
 end
 
-function draw_start()
-	cls(0)
-
-	print("shmup 1", 20,40, 2)
-	print("press any button to start", 15,60, 5)
-
-end
-
 function start_game()
 	mode = "game"
-
 
 	ship = {}
 	ship.x = 64
@@ -59,7 +43,6 @@ function start_game()
 	invul = 0
 
 	t = 0
-
 
 	stars={}
 	for i=0, 80 do
@@ -102,7 +85,7 @@ function start_game()
 	end
 
 	particles = {}
-
+	shocks = {}
 end
 
 function _init()
@@ -128,18 +111,6 @@ function _update()
 	end
 end
 
-
-function _draw()
-
-	if mode == "game" then
-		draw_game()
-	elseif mode == "start" then
-		draw_start()
-	elseif mode == "over" then
-		draw_over()
-	end
-
-end
 
 function update_game()
 
@@ -211,6 +182,149 @@ function update_controls()
     end
 end
 
+
+-->8
+-- utils
+function draw_obj(obj)
+    spr(obj.spr, obj.x, obj.y)
+end
+
+function draw_array(array)
+    for obj in all(array) do
+        draw_obj(obj)
+    end
+end
+
+function mod(a,n,d)
+-- a modulo n offset d
+    return a - n * flr((a-d)/n)
+end
+
+
+function col(a,b)
+    local a_left = a.x
+    local a_right = a.x + 7
+    local a_top = a.y
+    local a_bottom = a.y + 7
+
+    local b_left = b.x
+    local b_right = b.x + 7
+    local b_top = b.y
+    local b_bottom = b.y + 7
+
+    if a_right < b_left then return false end
+    if a_left > b_right then return false end
+    if a_top > b_bottom then return false end
+    if a_bottom < b_top then return false end
+
+    return true
+end
+
+-->8
+-- drawing
+
+function _draw()
+
+	if mode == "game" then
+		draw_game()
+	elseif mode == "start" then
+		draw_start()
+	elseif mode == "over" then
+		draw_over()
+	end
+
+end
+
+function draw_start()
+	cls(0)
+
+	print("shmup 1", 20,40, 2)
+	print("press any button to start", 15,60, 5)
+end
+
+function draw_over()
+	cls(2)
+
+	print("game over", 20,40, 6)
+	print("press action button to start again", 15,60, 5)
+end
+
+function draw_game()
+	cls(0)
+
+	draw_asteroids()
+	starfield()
+
+	if invul <= 0 then
+		spr(ship.spr, ship.x, ship.y, 2,2)
+		spr(flr(ship.flame), ship.x+2, ship.y+15)
+	else
+		if sin(t/10) < -0.2 then
+			draw_obj(ship)
+			spr(ship.flame, ship.x, ship.y)
+		end
+	end
+
+	draw_array(enemies)
+
+	draw_array(bullets)
+
+	if muzzle_flash > 0 then
+		circfill(ship.x + 4,ship.y-3, muzzle_flash, 9)
+	end
+
+	-- draw particles
+	for p in all(particles) do
+		circfill(p.x, p.y, p.size, p.color)
+	end
+	for s in all(shocks) do
+		circ(s.x, s.y, s.size, 7)
+		s.size += s.rate
+		s.age += 1 
+		if s.age >= s.maxage then
+			del(shocks, s)
+		end
+	end
+
+	-- UI
+	print("score="..score, 30, 1, 12)
+	
+	for i=0,2 do
+		if lives>i then
+		spr(10,i*9+1,1)
+		else
+		spr(9,i*9+1,1)
+		end
+	end
+	for i=0,2 do
+		if bombs>i then
+		spr(25,101 + i*9,1)
+		else
+		spr(26,101 + i*9,1)
+		end
+	end
+
+end
+
+function draw_asteroids()
+	for asteroid in all(asteroids) do
+		draw_obj(asteroid)
+	end
+end
+
+
+function starfield()
+	for star in all(stars) do
+		if star.speed < 1.8 then
+			pset(star.x,star.y,star.color)
+		else
+			line(star.x,star.y,star.x,star.y-2, star.color)
+		end
+	end
+end
+
+
+-->8
 function animate_stars()
 	for star in all(stars) do
 		star.y = (star.y + star.speed) % 127
@@ -292,28 +406,40 @@ function update_collision_bullets()
 	end
 end
 
-function explode(expx,expy)
-	for i=1,50 do
-		local p={}
-		p.x = expx + rnd(10)
-		p.y = expy + rnd(10)
-		p.sx = 0
-		p.sy = 0
-		p.age = 0
-		--
-		p.size = rnd(8)
-		p.rate = 0.5 + rnd(0.5)
-		rndc = rnd(3)
-		if rndc < 1 then
-			p.color = 1		
-		elseif rndc < 2 then
-			p.color = 5		
-		else
-			p.color = 9		
-		end
-		--
-		add(particles,p)
+function explode(x,y)
+	for i=1,5 do
+			add(particles,create_p(x,y))
 	end
+	local s={}
+	s.x = x
+	s.y = y 
+	s.size = 0
+	s.age = 0
+	s.maxage = 10 + rnd(20)
+	s.rate = 0.5 + rnd(0.5)
+	add(shocks, s)
+end
+
+function create_p(x, y)
+	local p={}
+	p.x = x + rnd(10)
+	p.y = y + rnd(10)
+	p.sx = rnd(1) - 0.5
+	p.sy = rnd(1) - 0.5
+	p.age = 0
+	p.size = rnd(4) + 4
+	p.rate = 0.3+ rnd(0.5)
+	p.maxage = 30 + rnd(30)
+	p.fission = p.maxage / 2
+	rndc = rnd(3)
+	if rndc < 1 then
+		p.color = 1		
+	elseif rndc < 2 then
+		p.color = 5		
+	else
+		p.color = 9
+	end
+	return p
 end
 
 function update_expl()
@@ -321,119 +447,23 @@ function update_expl()
 		p.x += p.sx
 		p.y += p.sy
 		p.age += 1
-		p.size = p.size - p.rate
-	
-		if p.age > 10 + rnd(30) then
+		
+		local newsize = p.size - p.rate
+		if p.maxage>10 and p.size > p.fission and newsize <= p.fission then
+			for i=1,8 do
+				local pc = create_p(p.x, p.y)
+				pc_size = rnd(p.size)
+				pc.maxage = p.maxage / 2
+				add(particles, pc)
+			end
+		end		
+		
+		p.size = newsize
+		if p.age > p.maxage then
 			del(particles,p)
 		end	
 	end
 end
-
--->8
--- utils
-function draw_obj(obj)
-    spr(obj.spr, obj.x, obj.y)
-end
-
-function draw_array(array)
-    for obj in all(array) do
-        draw_obj(obj)
-    end
-end
-
-function mod(a,n,d)
--- a modulo n offset d
-    return a - n * flr((a-d)/n)
-end
-
-
-function col(a,b)
-    local a_left = a.x
-    local a_right = a.x + 7
-    local a_top = a.y
-    local a_bottom = a.y + 7
-
-    local b_left = b.x
-    local b_right = b.x + 7
-    local b_top = b.y
-    local b_bottom = b.y + 7
-
-    if a_right < b_left then return false end
-    if a_left > b_right then return false end
-    if a_top > b_bottom then return false end
-    if a_bottom < b_top then return false end
-
-    return true
-end
-
--->8
--- drawing
-function draw_game()
-	cls(0)
-
-	draw_asteroids()
-	starfield()
-
-	if invul <= 0 then
-		spr(ship.spr, ship.x, ship.y, 2,2)
-		spr(flr(ship.flame), ship.x+2, ship.y+15)
-	else
-		if sin(t/10) < -0.2 then
-			draw_obj(ship)
-			spr(ship.flame, ship.x, ship.y)
-		end
-	end
-
-	draw_array(enemies)
-
-	draw_array(bullets)
-
-	if muzzle_flash > 0 then
-		circfill(ship.x + 4,ship.y-3, muzzle_flash, 9)
-	end
-
-	-- draw particles
-	for p in all(particles) do
-		circfill(p.x, p.y, p.size, p.color)
-	end
-
-	-- UI
-	print("score="..score, 30, 1, 12)
-	
-	for i=0,2 do
-		if lives>i then
-		spr(10,i*9+1,1)
-		else
-		spr(9,i*9+1,1)
-		end
-	end
-	for i=0,2 do
-		if bombs>i then
-		spr(25,101 + i*9,1)
-		else
-		spr(26,101 + i*9,1)
-		end
-	end
-
-end
-
-function draw_asteroids()
-	for asteroid in all(asteroids) do
-		draw_obj(asteroid)
-	end
-end
-
-
-function starfield()
-	for star in all(stars) do
-		if star.speed < 1.8 then
-			pset(star.x,star.y,star.color)
-		else
-			line(star.x,star.y,star.x,star.y-2, star.color)
-		end
-	end
-end
-
 
 __gfx__
 00000000000000000000000000000000000000000009000000080000000800000008000088800888888008880000000000000000000000000000000000000000
@@ -445,12 +475,12 @@ __gfx__
 0000000000222e002e2222e200e22200aaaaaaaa0000000000000000000000000000000000888800008888000000000000000000000000000000000000000000
 00000000002992009029920900299200a0aaaa0a0000000000000000000000000000000000088000000880000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000077780000000000000000000000000000000000000000000000000
-00077000007997000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000
-00077000079979900000000000000000000000000000000000000000000000000000000007777770077777700000000000000000000000000000000000000000
-00067000099799900000000000000000000000000000000000000000000000000000000077777777770000770000000000000000000000000000000000000000
-00066000097999700000000000000000000000000000000000000000000000000000000077777777700000070000000000000000000000000000000000000000
-00066000079997900000000000000000000000000000000000000000000000000000000077777777700000070000000000000000000000000000000000000000
-00000000007979000000000000000000000000000000000000000000000000000000000077777777770000770000000000000000000000000000000000000000
+00088000007997000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000
+00099000079979900000000000000000000000000000000000000000000000000000000007777770077777700000000000000000000000000000000000000000
+000aa000099799900000000000000000000000000000000000000000000000000000000077777777770000770000000000000000000000000000000000000000
+0009a000097999700000000000000000000000000000000000000000000000000000000077777777700000070000000000000000000000000000000000000000
+00099000079997900000000000000000000000000000000000000000000000000000000077777777700000070000000000000000000000000000000000000000
+00088000007979000000000000000000000000000000000000000000000000000000000077777777770000770000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000007777770077777700000000000000000000000000000000000000000
 00097000000770000007900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00999700009779000079990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

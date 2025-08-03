@@ -171,6 +171,8 @@ function update_game()
 	update_collisions_edges()
 	update_collision_ship()
 	update_collision_bullets()
+	
+	update_expl()
 
 	if lives <= 0 then mode = "over" end
 
@@ -290,34 +292,42 @@ function update_collision_bullets()
 	end
 end
 
--- function explode(x, y, num, size)
-	-- explosions = {}
-	-- for i=1,num
-		-- rad = rnd(size)
-		-- x_e =
-		-- add(explosions, {})
-	-- end
--- end
-
 function explode(expx,expy)
-	for i=1,20 do
-		local myp={}
-		myp.x = expx
-		myp.y = expy
-		myp.sx = rnd(8) - 4
-		myp.sy = rnd(8) - 4
-		myp.age = 0
+	for i=1,50 do
+		local p={}
+		p.x = expx + rnd(10)
+		p.y = expy + rnd(10)
+		p.sx = 0
+		p.sy = 0
+		p.age = 0
 		--
-		myp.size = rnd(5)
-		myp.agerate = 10
-		myp.child = 1
+		p.size = rnd(8)
+		p.rate = 0.5 + rnd(0.5)
+		rndc = rnd(3)
+		if rndc < 1 then
+			p.color = 1		
+		elseif rndc < 2 then
+			p.color = 5		
+		else
+			p.color = 9		
+		end
 		--
-		add(particles,myp)
+		add(particles,p)
 	end
 end
 
-
-
+function update_expl()
+	for p in all(particles) do
+		p.x += p.sx
+		p.y += p.sy
+		p.age += 1
+		p.size = p.size - p.rate
+	
+		if p.age > 10 + rnd(30) then
+			del(particles,p)
+		end	
+	end
+end
 
 -->8
 -- utils
@@ -383,16 +393,8 @@ function draw_game()
 	end
 
 	-- draw particles
-	for myp in all(particles) do
-		circfill(myp.x,myp.y,myp.size, 9)
---		pset(myp.x,myp.y,9)
-		myp.x += myp.sx
-		myp.y += myp.sy
-		myp.age += 1
-	
-		if myp.age > 10 + rnd(30) then
-			del(particles,myp)
-		end
+	for p in all(particles) do
+		circfill(p.x, p.y, p.size, p.color)
 	end
 
 	-- UI

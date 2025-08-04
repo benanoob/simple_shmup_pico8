@@ -32,7 +32,7 @@ function start_game()
 
  x_bul = 64
  y_bul = -10
-	speed_bul = 3
+	speed_bul = 5
 	muzzle_flash = 0
 
 
@@ -80,12 +80,17 @@ function start_game()
 
 	enemies = {}
 	for i=1,12 do
-		add(enemies, {x=i*8 + 10,y=20,spr=34})
-
+		local en = {}
+		en.x = i*8 + 10
+		en.y = 20
+		en.spr = 34
+		en.hp = 10
+		add(enemies, en)
 	end
 
 	particles = {}
 	shocks = {}
+	impacts = {}
 end
 
 function _init()
@@ -203,14 +208,14 @@ end
 
 function col(a,b)
     local a_left = a.x
-    local a_right = a.x + 7
+    local a_right = a.x + 3
     local a_top = a.y
-    local a_bottom = a.y + 7
+    local a_bottom = a.y + 3
 
     local b_left = b.x
-    local b_right = b.x + 7
+    local b_right = b.x + 3
     local b_top = b.y
-    local b_bottom = b.y + 7
+    local b_bottom = b.y + 3
 
     if a_right < b_left then return false end
     if a_left > b_right then return false end
@@ -284,6 +289,10 @@ function draw_game()
 		if s.age >= s.maxage then
 			del(shocks, s)
 		end
+	end
+	
+	for imp in all(impacts) do
+		oval(imp.x,imp.y, imp.x1, imp.y1, 10)
 	end
 
 	-- UI
@@ -394,14 +403,33 @@ end
 
 function update_collision_bullets()
 	for bullet in all(bullets) do
-		for enemy in all(enemies) do
-			if col(bullet,enemy) then
-				sfx(2)
-				del(enemies,enemy)
-				explode(enemy.x,enemy.y)
-				del(bullets, bullet)
-				score += 1
+		for en in all(enemies) do
+			if col(bullet,en) then				
+				en.hp -=1
+				local imp = {}
+				imp.x = en.x + 2
+				imp.y = en.y + 5
+				imp.x1 = imp.x + 7
+				imp.y1 = imp.y + 2
+				imp.age = 0
+				add(impacts, imp) 
+				
+				if en.hp <=0 then
+					del(enemies,en)
+					explode(en.x,en.y)
+					score += 1
+					sfx(1)
+					sfx(2)
+					sfx(3)
+				end
+				del(bullets, bullet)				
 			end
+		end
+	end
+	for imp in all(impacts) do
+		imp.age += 1
+		if imp.age > 30 then
+			del(impacts, imp)
 		end
 	end
 end
@@ -515,6 +543,7 @@ __gfx__
 00001110000000000000111000000000000011100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00011011000000000000101000000000000010100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
-00010000250502c0502f0502f0502d05021050170500e0500b0500905006050030500305000000000000000000000000000000000200002000020000200002000000000000000000000000000000000000000000
-000100001d6501e6501e65018650136500a6500565003600036000160000600006000560004600036000360003500035000350003500035000350003500035000350003500035000150000500005000000000000
+000100002a750297502775024750207501d7501c7501b7501a7501875009400064000330002300013000130001300003000030000300003000030000300003000000000000000000000000000000000000000000
+000100000475003750037500275002750027500175001750017500175001750017500075000750007500075000750007500350003500035000350003500035000350003500035000150000500005000000000000
 00010000125501b550265502d550295502755025550245502055020550235502655010550295502c5502d5502d5502c550295502655022550215502255027550295500a5500e55012550125500c5500b55019550
+0001000010650106500f6500f6500e6500e6500d6500d6500c6500b6500b6500b6500a6500a6500a6500b6500b6500b6500b6500b6500b6500b6500b6500c6500c6500c6500c6500c6500c6500c6500000000000

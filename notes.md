@@ -3,10 +3,16 @@
 - [ ] broken asteroid ?
 - [x] implement better explosions
 - [x] improve basic bullet cause it sux rn
-- [ ] fix invul drawing
+- [x] fix invul drawing
 - [x] give health to ennemies
-    - [] add some hit effect
+    - [x] add some hit effect
+    - [ ] add blink when ennemy get hit
 - [ ] vertical UI
+    - [ ] ui feedback : I feel health is not legible
+    - remaining space on top of the bar for the rest of infos
+        - score
+        - wave counter
+        - am i forgetting anything ?
 - [x] polish hit effect
     - [x] add sparks (ep 16 on shockwaves) / hit + destruction
 - [x] make the explosion bigger
@@ -15,10 +21,22 @@
 - [x] postion hit boxes properly
     - [x] size adjust
     - [x] update collision code
--[ ] integrate new ennemies types
--[ ] quick fix collision between ship and border of screen
--[ ] improve main shot
+- [ ] integrate new ennemies types
+- [ ] quick fix collision between ship and border of screen
+- [ ] improve main shot
     - it's too small
+- [ ] decide on a color palette with lizenn
+- [ ] get lizenn to design a player shot
+
+# implementation information
+## conventions
+### sprite positioning
+`thing.spx` is the offset in pixel where to draw the sprite
+
+### hitbox
+the hitbox always starts at `thing.x` `thing.y`
+the size is specified by `thing.xb` `thing.yb`
+
 
 # ideas
 - vertical hud
@@ -38,17 +56,20 @@
 
 ## hit effect
 - small oval shape where the bullet hits and disappears
+    - this is read as a shielding effect and actually could mean big ennemies in doj shield the smaller side shots which could make sense
 - color can be as bold as the shot itself
-- for laser shot ==> becomes huge/concentrated(bright, even white) at the impact point
 - ennemies blink in a colored state, quite bold color again(blue in DOJ)
     - big ennemies have fire sprites spawning on them
 - x shape ?
-
 - [x] I need to know the impact bullet ennemy position to place properly my hit effect wrt to the bullet
 
 ## I just want a big laser shot mannnn
+- hit effect for laser shot ==> becomes huge/concentrated(bright, even white) at the impact point
 
-## moonshot
+
+## since the bar is the same color as the ennemy could we design a system where you go and collect sth on them ?
+
+## moonshot (next game/out of scope)
 ### memorable character integration
 - get a cool pilot view on screen that is animated and cool
 - characters are grabbing us to games
@@ -75,3 +96,4 @@
 ## 16/08/2025
 - migrate code out of pico8
 - study ui from lizenn
+- rework bullet system and improve it

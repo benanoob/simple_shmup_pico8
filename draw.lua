@@ -24,7 +24,7 @@ function draw_game()
     else
         if sin(t / 10) < -0.2 then
             draw_obj(ship)
-            spr(ship.flame, ship.x, ship.y)
+            spr(flr(ship.flame), ship.x + ship.spx + 2, ship.y + ship.spy + 10)
         end
     end
 
@@ -36,8 +36,12 @@ function draw_game()
         draw_hitb()
     end
 
-    if muzzle_flash > 0 then
-        circfill(ship.x + ship.spx + 5, ship.y + ship.spy - 2, muzzle_flash, 9)
+    for bul in all(bullets) do
+        draw_obj(bul)
+        if bul.muz_flash > 0 then
+            circfill(bul.muz_x, bul.muz_y, bul.muz_flash, 13)
+        end
+        bul.muz_flash -= 1
     end
 
     -- draw particles

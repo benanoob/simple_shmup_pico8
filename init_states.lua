@@ -27,12 +27,7 @@ function start_game()
 	ship.xb = 2
 	ship.yb = 2
 
-
- x_bul = 64
- y_bul = -10
 	speed_bul = 5
-	muzzle_flash = 0
-
 
 	score = 69
 	lives = 3
@@ -77,13 +72,13 @@ function start_game()
 	delay_next_shot = 0
 
 	enemies = {}
-	for i=1,12 do
+	for i=1,9 do
 		local en = {}
-		en.x = i*8 + 10
+		en.x = i*10 + 5
 		en.y = 20
 		en.spx = 0
 		en.spy = 0
-		en.spr = 34
+		en.spr = 35 + flr(rnd(2))
 		en.w = 1
 		en.h = 1
 		en.hp = 10

@@ -20,9 +20,6 @@ function update_game()
     update_enemies()
 
     update_bullets()
-    if muzzle_flash > 0 then
-        muzzle_flash = muzzle_flash - 1
-    end
 
     update_collisions_edges()
     update_collision_ship()
@@ -57,13 +54,29 @@ function update_controls()
     end
     if btn(5) then
         if delay_next_shot == 0 then
-            local bullet = { x = ship.x + ship.spx + 4, y = ship.y + ship.spy - 2, xb = 3, yb = 6, spx = 0, spy = 0, w = 1, h = 1, spr = 16 }
-            add(bullets, bullet)
+            add(bullets, create_bullet(ship.x + ship.spx+ 1, ship.y + ship.spy - 3, 0))
+            add(bullets, create_bullet(ship.x + ship.spx + 6, ship.y + ship.spy - 3, 1))
             sfx(0)
-            muzzle_flash = 4
             delay_next_shot = fire_rate
         end
     end
+end
+
+function create_bullet(x, y, spr)
+    local bul = {}
+    bul.x = x
+    bul.y = y
+    bul.xb = 3
+    bul.yb = 7
+    bul.spx = 0
+    bul.spy = 0
+    bul.w = 1
+    bul.h = 1
+    bul.spr = spr
+    bul.muz_x = x+1
+    bul.muz_y = y
+    bul.muz_flash = 4
+    return bul
 end
 
 function update_bullets()
@@ -98,7 +111,7 @@ end
 function update_enemies()
     for enemy in all(enemies) do
         -- enemy.y += 0.4
-        enemy.spr = mod(enemy.spr + 0.1, 3, 32)
+        -- enemy.spr = mod(enemy.spr + 0.1, 3, 32)
     end
 end
 

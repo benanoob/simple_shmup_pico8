@@ -12,6 +12,11 @@ function draw_over()
     print("press action button to start again", 15, 60, 5)
 end
 
+function draw_wave_text()
+    draw_game()
+    print("wave "..wave, 44, 40, 7)
+end
+
 function draw_game()
     cls(0)
 

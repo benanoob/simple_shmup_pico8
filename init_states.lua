@@ -4,6 +4,8 @@ function update_over()
     end
 end
 
+
+
 function update_start()
     if btnp(4) or btnp(5) then
         start_game()
@@ -11,7 +13,9 @@ function update_start()
 end
 
 function start_game()
-    mode = "game"
+    mode = "wave_text"
+
+    wave = 1
 
     ship = {}
     ship.x = 64
@@ -23,7 +27,7 @@ function start_game()
     ship.spy = -5
     ship.w = 2
     ship.h = 2
-    ship.flame = 0
+    ship.flame = 6
     ship.xb = 2
     ship.yb = 2
 

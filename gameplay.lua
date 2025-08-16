@@ -34,6 +34,10 @@ function update_game()
     update_asteroids()
 end
 
+function update_wave_text()
+    update_game()
+end
+
 function update_controls()
     if btn(0) then
         ship.xspeed = -2

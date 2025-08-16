@@ -27,6 +27,8 @@
 - [x] decide on a color palette with lizenn
 - [x] get lizenn to design a player shot
 - [x] teach lizenn git
+- [ ] introduce weapon damage
+- [ ] introduce weapon type
 
 # implementation information
 ## conventions
@@ -99,4 +101,8 @@ characters are `3x5` pixels
 ## 16/08/2025
 - migrate code out of pico8
 - study ui from lizenn
+- take ui and palette decisions w/ Lizenn
 - rework bullet system and improve it
+- shmup tutorial ep17
+    - implement game flow
+- in ep14 palette trick to make flash hit impact

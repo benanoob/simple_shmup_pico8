@@ -17,6 +17,8 @@ function _update()
         update_game()
     elseif mode == "start" then
         update_start()
+    elseif mode == "wave_text" then
+        update_wave_text()
     elseif mode == "over" then
         update_over()
     end
@@ -27,6 +29,8 @@ function _draw()
         draw_game()
     elseif mode == "start" then
         draw_start()
+    elseif mode == "wave_text" then
+        draw_wave_text()
     elseif mode == "over" then
         draw_over()
     end

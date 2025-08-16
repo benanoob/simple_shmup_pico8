@@ -1,6 +1,6 @@
 # todo
 - [x] fix lag shot button
-- [ ] broken asteroid ?
+- [x] broken asteroid
 - [x] implement better explosions
 - [x] improve basic bullet cause it sux rn
 - [x] fix invul drawing
@@ -8,11 +8,10 @@
     - [x] add some hit effect
     - [ ] add blink when ennemy get hit
 - [ ] vertical UI
-    - [ ] ui feedback : I feel health is not legible
+    - [x] ui feedback : I feel health is not legible
     - remaining space on top of the bar for the rest of infos
         - score
         - wave counter
-        - am i forgetting anything ?
 - [x] polish hit effect
     - [x] add sparks (ep 16 on shockwaves) / hit + destruction
 - [x] make the explosion bigger
@@ -23,10 +22,11 @@
     - [x] update collision code
 - [ ] integrate new ennemies types
 - [ ] quick fix collision between ship and border of screen
-- [ ] improve main shot
+- [x] improve main shot
     - it's too small
-- [ ] decide on a color palette with lizenn
-- [ ] get lizenn to design a player shot
+- [x] decide on a color palette with lizenn
+- [x] get lizenn to design a player shot
+- [x] teach lizenn git
 
 # implementation information
 ## conventions
@@ -37,6 +37,9 @@
 the hitbox always starts at `thing.x` `thing.y`
 the size is specified by `thing.xb` `thing.yb`
 
+# visuals
+## font
+characters are `3x5` pixels
 
 # ideas
 - vertical hud

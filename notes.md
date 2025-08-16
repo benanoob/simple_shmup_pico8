@@ -17,6 +17,8 @@
     - [x] update collision code
 -[ ] integrate new ennemies types
 -[ ] quick fix collision between ship and border of screen
+-[ ] improve main shot
+    - it's too small
 
 # ideas
 - vertical hud
@@ -70,3 +72,6 @@
 - fix hitbox
 - fix sprite draw positions
 - fix and improve explosions
+## 16/08/2025
+- migrate code out of pico8
+- study ui from lizenn

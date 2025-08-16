@@ -4,30 +4,14 @@ function update_over()
 	end
 end
 
-function draw_over()
-	cls(2)
-
-	print("game over", 20,40, 6)
-	print("press action button to start again", 15,60, 5)
-end
-
 function update_start()
 	if btnp(4) or btnp(5) then
 		start_game()
 	end
 end
 
-function draw_start()
-	cls(0)
-
-	print("shmup et non pas meuporg", 20,40, 2)
-	print("press action button to start", 15,60, 5)
-
-end
-
 function start_game()
 	mode = "game"
-
 
 	ship = {}
 	ship.x = 64
@@ -35,12 +19,18 @@ function start_game()
 	ship.xspeed = 0
 	ship.yspeed = 0
 	ship.spr = 64
+	ship.spx = -4
+	ship.spy = -5
+	ship.w = 2
+	ship.h = 2
 	ship.flame = 0
+	ship.xb = 2
+	ship.yb = 2
 
 
-    x_bul = 64
-    y_bul = -10
-	speed_bul = 3
+ x_bul = 64
+ y_bul = -10
+	speed_bul = 5
 	muzzle_flash = 0
 
 
@@ -51,7 +41,6 @@ function start_game()
 	invul = 0
 
 	t = 0
-
 
 	stars={}
 	for i=0, 80 do
@@ -80,7 +69,7 @@ function start_game()
 	asteroids_y = {}
 	asteroids_speed = {}
 	for i=1,3 do
-		local asteroid = {x=rnd(127),y=-40,speed=rnd(0.8),spr=48}
+		local asteroid = {x=rnd(127),y=-40,spx=0,spy=0,speed=rnd(0.8),spr=48}
 	end
 
 	bullets = {}
@@ -89,10 +78,22 @@ function start_game()
 
 	enemies = {}
 	for i=1,12 do
-		add(enemies, {x=i*8 + 10,y=20,spr=34})
-
+		local en = {}
+		en.x = i*8 + 10
+		en.y = 20
+		en.spx = 0
+		en.spy = 0
+		en.spr = 34
+		en.w = 1
+		en.h = 1
+		en.hp = 10
+		en.xb = 8
+		en.yb = 8
+		add(enemies, en)
 	end
 
 	particles = {}
-
+	shocks = {}
+	impacts = {}
+	sparks = {}
 end

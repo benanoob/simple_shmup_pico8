@@ -295,3 +295,10 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
 ## 25/12/2025
 - implement ui
 - fix enemy movement computation for subsequent move order
+- study doj patterns
+    - importance of bullet speed to break up clusters shot very packed in time
+    - use time to split bullets or create nice walls of course
+    - shoot interesting shapes (V for instance) from different places at the player, they will break up nicely
+    - canon position that shoots the pattern can create a distinct challenge
+    - make canon rotate
+    - TODO: implement code by canon, not sure how to generalize more at this point, will see after a few enemy implemented

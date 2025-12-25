@@ -74,6 +74,24 @@ function load_enemy(enemy_table)
         en.xb = 13
         en.yb = 13
         en.update_canon = update_tenta1_canon
+    elseif en.type == "beetle" then
+        en.spr_settings = {
+            {
+                spr = 39,
+                frame = 1,
+                sprx = 0,
+                spry = 0,
+                w = 2,
+                h = 2,
+                sprx = 0,
+                spry = 0
+            }
+        }
+        en.spd = 0.08
+        en.hp = 40
+        en.xb = 13
+        en.yb = 13
+        en.update_canon = update_tenta1_canon
     elseif en.type == "doublob" then
         en.spr_settings = {
             {

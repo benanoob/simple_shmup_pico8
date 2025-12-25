@@ -42,6 +42,7 @@ function draw_game()
     end
 
     for en in all(enemies) do
+        animate_obj(en)
         local shakx = 0
         local shaky = 0
         if en.flash > 0 then
@@ -180,7 +181,6 @@ function draw_ui()
     print(laser.meter, 115, 2, 13)
     -- laser meter
     local norm_meter = laser.meter / 100
-    pq(99 + norm_meter * 60)
     line(6, 99, 6, 99 - norm_meter * 60, 4)
     line(7, 100, 7, 100 - norm_meter * 60, 13)
     line(8, 101, 8, 101 - norm_meter * 60, 12)

@@ -39,8 +39,8 @@ function update_collisions_edges()
     if ship.x > 125 then
         ship.x = 125
     end
-    if ship.x < 10 then
-        ship.x = 10
+    if ship.x < 25 then
+        ship.x = 25
     end
     if ship.y > 122 then
         ship.y = 122

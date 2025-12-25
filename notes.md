@@ -1,6 +1,7 @@
 # todo
-- [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point
+- [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point ?
     - check if traditional shmup have enemy movement speed consistency or not
+    -  better for timeline anticipation
 - [ ] enemy attacks
     - [x] popcorn bullet sprite
     - [x] design 1 major enemy pattern
@@ -26,13 +27,15 @@
 - [ ] program particles for ship engine
 - [ ] improve muzzle flash
     - see lizenn proposal, I can maybe program sth similar with a bunch of shrinking ovals
-- [ ] use only one frame for enemy bullet (use symmetries)
+- [ ] fix big ass laser start
+- [ ] laser end when not hitting an enemy
 
 ## probably not ?
 - ~~reduce ship speed when laser ??~~
     - may be incompatible with a meter/resource gated laser, let’s keep this simple
 
 ## done
+- [x] use only one frame for enemy bullet (use symmetries)
 - [x] normalize diagonal ship speed
 - [x] fix order of drawing for the elements (ui on top, etc...)
 - [x] implement ui skin
@@ -99,6 +102,10 @@
     - despawn player bullet offscreen (check if it’s already done ?)
 - [x] delete enemy bullets offscreen
 
+# game design
+## play area
+- x start at 26 pixel (end of gui)
+- ship movement blocked at 25
 
 # implementation information
 ## conventions
@@ -287,3 +294,4 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
 - start implementing proper ui elements
 ## 25/12/2025
 - implement ui
+- fix enemy movement computation for subsequent move order

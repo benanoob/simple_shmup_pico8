@@ -303,3 +303,7 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
     - TODO: implement code by canon, not sure how to generalize more at this point, will see after a few enemy implemented
 ## 26/12/2025
     - start implementing new fire system
+    - design new turn animation ship
+    - todo
+        - [ ] check if bullets 8x8 need 1 x offset when flipped to maintain position
+        - [ ] ship definitely needs this offset for the cockpit to stay in position

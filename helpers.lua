@@ -48,6 +48,11 @@ function lerp(a, b, t)
     return ret
 end
 
+function get_angle_player(x,y)
+    -- get the angle towards the player, cos and sine to get the carthesian vectors pointing that direction
+    return atan2(ship.x - x, ship.y - y)
+end
+
 function linspace(num_points)
     local array = {}
     for i = 1, num_points do

@@ -87,16 +87,54 @@ function load_enemy(enemy_table)
                 spry = 0
             }
         }
-        en.spd = 0.08
+        en.spd = 0.4
         en.hp = 40
-        en.xb = 13
-        en.yb = 13
-        en.update_canon = update_tenta1_canon
+        en.xb = 15
+        en.yb = 15
+        en.update_canon = nil
+        en.canons = {
+            {
+                off_x = 0,
+                off_y = 6,
+                fire_rate = 12,
+                cooldown = 40,
+                num_fire = 3,
+                current_fire = 3,
+                t = 10,
+                fire_func = fire_side_beetle,
+                args_func = {
+                    thetas = { 0.3, 0.4, 0.5, 0.6, 0.7 }
+                }
+            },
+            {
+                off_x = 13,
+                off_y = 6,
+                fire_rate = 12,
+                cooldown = 60,
+                num_fire = 3,
+                current_fire = 3,
+                t = 10,
+                fire_func = fire_side_beetle,
+                args_func = {
+                    thetas = { 0.8, 0.9, 1, 0.1, 0.2, 0.3 }
+                }
+            },
+            {
+                off_x = 6,
+                off_y = 15,
+                fire_rate = 10,
+                cooldown = 60,
+                num_fire = 2,
+                current_fire = 2,
+                t = 5,
+                fire_func = fire_at_player
+            }
+        }
     elseif en.type == "doublob" then
         en.spr_settings = {
             {
                 frames = { 34, 34 },
-                flips_x = {false,true},
+                flips_x = { false, true },
                 frame = 1,
                 start = 1,
                 stop = 2,
@@ -165,8 +203,8 @@ function lerp_enemy(en, command)
         command.start_x = en.x
         command.start_y = en.y
         local spx = command.dest_x - en.x
-        local spy = command.dest_y  - en.y
-        command.last_t =  flr(sqrt(spx * spx + spy + spy) / en.spd)
+        local spy = command.dest_y - en.y
+        command.last_t = flr(sqrt(spx * spx + spy + spy) / en.spd)
         command.t = linspace(command.last_t)
     end
     if en.t < command.last_t then

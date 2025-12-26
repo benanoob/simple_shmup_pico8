@@ -2,20 +2,11 @@
 - [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point ?
     - check if traditional shmup have enemy movement speed consistency or not
     -  better for timeline anticipation
-- [ ] enemy attacks
-    - [x] popcorn bullet sprite
-    - [x] design 1 major enemy pattern
-    - [x] manage fire state evolution in time
-    - [ ] delay shot is attached to the whole enemy, pb for different file rates/patterns on one enemy
-    - [x] add enemy bullet collisions
 - [ ] add big laser hitbox with higher damage at start
 - [ ] fix hit impact stop animating on wave screen
 - [ ] manage player ship states with a state machine
     - [ ] lock main shot when laser
 - [ ] on hit blink of ship should be palette swap instead of disappearing
-- [x] fix asteroid init (not drawn rn)
-- [x] bigger particle for laser impact
-- [x] add a parameter for explosion size linked to enemy size
 - [ ] implement player tracking pop corn (kamikaze)
 
 ## polish
@@ -35,6 +26,14 @@
     - may be incompatible with a meter/resource gated laser, let’s keep this simple
 
 ## done
+- [x] fix asteroid init (not drawn rn)
+- [x] bigger particle for laser impact
+- [x] add a parameter for explosion size linked to enemy size
+- [x] popcorn bullet sprite
+- [x] design 1 major enemy pattern
+- [x] manage fire state evolution in time
+- [x] delay shot is attached to the whole enemy, pb for different file rates/patterns on one enemy
+- [x] add enemy bullet collisions
 - [x] use only one frame for enemy bullet (use symmetries)
 - [x] normalize diagonal ship speed
 - [x] fix order of drawing for the elements (ui on top, etc...)
@@ -302,3 +301,5 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
     - canon position that shoots the pattern can create a distinct challenge
     - make canon rotate
     - TODO: implement code by canon, not sure how to generalize more at this point, will see after a few enemy implemented
+## 26/12/2025
+    - start implementing new fire system

@@ -48,10 +48,25 @@ function update_game()
             end
         end
         if en.fire_state == "fire" then
-            if en.delay_shot <= 0 then
+            if en.update_canon and en.delay_shot <= 0 then
                 en.update_canon(en)
             else
                 en.delay_shot -= 1
+            end
+
+            for canon in all(en.canons) do
+                if canon.t == 0 then
+                    canon.fire_func(en.x + canon.off_x, en.y + canon.off_y, en, canon.args_func)
+                    canon.current_fire -= 1
+                    if canon.current_fire == 0 then
+                        canon.t = canon.cooldown
+                        canon.current_fire = canon.num_fire
+                    else
+                        canon.t = canon.fire_rate
+                    end
+                else
+                    canon.t -= 1
+                end
             end
         end
     end

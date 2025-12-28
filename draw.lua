@@ -422,6 +422,7 @@ end
 
 function draw_obj(obj)
     for key, setting in pairs(obj.spr_settings) do
+        if setting.w then
         spr(
             setting.spr,
             obj.x + (setting.sprx or 0),
@@ -431,5 +432,19 @@ function draw_obj(obj)
             setting.flip_x,
             setting.flip_y
         )
+    else
+        sspr(
+            obj.spr[1],
+            obj.spr[2],
+            obj.sw,
+            obj.sh,
+            obj.x + (setting.sprx or 0),
+            obj.y + (setting.spry or 0),
+            obj.sw,
+            obj.sh,
+            obj.flip_x,
+            obj.flip_y
+        )
+    end
     end
 end

@@ -28,6 +28,7 @@ function start_game()
     ship.spr_settings = {
         ship = {
             frames = { 68, 66, 64, 66, 68 },
+            frames = { { 22, 32 }, { 11, 32 }, { 0, 32 }, { 11, 32 }, { 22, 32 }  },
             flips_x = { false, false, false, true, true },
             flip_x = false,
             frame = 3,
@@ -36,9 +37,9 @@ function start_game()
             speed = 0.20,
             loop = false,
             dir = 1,
-            sprx = -6,
+            sprx = -4,
             spry = -5,
-            w = 2,
+            sw = 11,
             h = 2
         },
         flame = {

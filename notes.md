@@ -1,24 +1,16 @@
 # todo
-[ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point
-- [ ] enemy attacks
-    - [x] popcorn bullet sprite
-    - [x] design 1 major enemy pattern
-    - [x] manage fire state evolution in time
-    - [ ] delay shot is attached to the whole enemy, pb for different file rates/patterns on one enemy
-    - [x] add enemy bullet collisions
+- [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point ?
+    - check if traditional shmup have enemy movement speed consistency or not
+    -  better for timeline anticipation
 - [ ] add big laser hitbox with higher damage at start
 - [ ] fix hit impact stop animating on wave screen
 - [ ] manage player ship states with a state machine
     - [ ] lock main shot when laser
-    - [x] normalize diagonal ship speed
 - [ ] on hit blink of ship should be palette swap instead of disappearing
-- [ ] fix order of drawing for the elements (ui on top, etc...)
+- [ ] implement player tracking pop corn (kamikaze)
 
 ## polish
-- [ ] implement ui skin
-- [x] 2 frames turn animation for the ship
-    - [x] in game implementation
-- [ ] animate flame for backward and forward motions (longer and shorter)
+- [ ] animate flame for backward and forward motions (longer and shorter) ?
 - [ ] flame tweak ?
     - https://saint11.art/img/pixel-tutorials/RocketTrail.gif
 - [ ] awkward flame on turns
@@ -26,12 +18,28 @@
 - [ ] program particles for ship engine
 - [ ] improve muzzle flash
     - see lizenn proposal, I can maybe program sth similar with a bunch of shrinking ovals
+- [ ] fix big ass laser start
+- [ ] laser end when not hitting an enemy
 
 ## probably not ?
 - ~~reduce ship speed when laser ??~~
     - may be incompatible with a meter/resource gated laser, let’s keep this simple
 
 ## done
+- [x] fix asteroid init (not drawn rn)
+- [x] bigger particle for laser impact
+- [x] add a parameter for explosion size linked to enemy size
+- [x] popcorn bullet sprite
+- [x] design 1 major enemy pattern
+- [x] manage fire state evolution in time
+- [x] delay shot is attached to the whole enemy, pb for different file rates/patterns on one enemy
+- [x] add enemy bullet collisions
+- [x] use only one frame for enemy bullet (use symmetries)
+- [x] normalize diagonal ship speed
+- [x] fix order of drawing for the elements (ui on top, etc...)
+- [x] implement ui skin
+- [x] 2 frames turn animation for the ship
+    - [x] in game implementation
 - [x] change hit impact
 - [x] recheck hitbox matching
 - [x] update ship sprite
@@ -93,6 +101,10 @@
     - despawn player bullet offscreen (check if it’s already done ?)
 - [x] delete enemy bullets offscreen
 
+# game design
+## play area
+- x start at 26 pixel (end of gui)
+- ship movement blocked at 25
 
 # implementation information
 ## conventions
@@ -276,3 +288,22 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
 ## 21/12/2025
 - rewrite all sprite drawing and animation
 - state machine fixed
+## 24/12/2025
+- fix draw order
+- start implementing proper ui elements
+## 25/12/2025
+- implement ui
+- fix enemy movement computation for subsequent move order
+- study doj patterns
+    - importance of bullet speed to break up clusters shot very packed in time
+    - use time to split bullets or create nice walls of course
+    - shoot interesting shapes (V for instance) from different places at the player, they will break up nicely
+    - canon position that shoots the pattern can create a distinct challenge
+    - make canon rotate
+    - TODO: implement code by canon, not sure how to generalize more at this point, will see after a few enemy implemented
+## 26/12/2025
+    - start implementing new fire system
+    - design new turn animation ship
+    - todo
+        - [ ] check if bullets 8x8 need 1 x offset when flipped to maintain position
+        - [ ] ship definitely needs this offset for the cockpit to stay in position

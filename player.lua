@@ -39,8 +39,8 @@ function update_collisions_edges()
     if ship.x > 125 then
         ship.x = 125
     end
-    if ship.x < 10 then
-        ship.x = 10
+    if ship.x < 25 then
+        ship.x = 25
     end
     if ship.y > 122 then
         ship.y = 122
@@ -72,19 +72,23 @@ function update_collision_laser()
                 laser.collide = true
                 laser.height = ship.y - 8 - (en.y + en.yb)
 
-                local p = {}
-                p.x = laser.x
-                p.y = laser.y
-                p.sx = rnd(3) - 1.5
-                p.sy = rnd(3) - 3
-                p.age = 0
-                p.maxage = rnd(30)
-                p.color = 13
-                add(sparks, p)
+                add(
+                    sparks,
+                    {
+                        x = laser.x,
+                        y = laser.y,
+                        sx = rnd(3) - 1.5,
+                        sy = rnd(3) - 3,
+                        age = 0,
+                        maxage = rnd(30),
+                        color = 13,
+                        size = 2
+                    }
+                )
 
                 if en.hp <= 0 then
                     del(enemies, en)
-                    explode(en.x, en.y)
+                    explode(en.x, en.y, en.xb / 1.5)
                     score += 1
                     sfx(1)
                     sfx(2)
@@ -125,7 +129,7 @@ function update_collision_bullets()
 
                 if en.hp <= 0 then
                     del(enemies, en)
-                    explode(en.x, en.y)
+                    explode(en.x, en.y,en.xb / 1.5)
                     laser.meter += 10
                     laser.meter = min(laser.meter, 100)
                     score += 1

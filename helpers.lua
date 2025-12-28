@@ -1,4 +1,5 @@
-
+truth_rnd = {true,false}
+expl_particle_colors = {8,9}
 
 function draw_hb(obj, color)
     color = color or 5
@@ -45,6 +46,11 @@ function lerp(a, b, t)
         ret = a + (b - a) * t
     end
     return ret
+end
+
+function get_angle_player(x,y)
+    -- get the angle towards the player, cos and sine to get the carthesian vectors pointing that direction
+    return atan2(ship.x - x, ship.y - y)
 end
 
 function linspace(num_points)

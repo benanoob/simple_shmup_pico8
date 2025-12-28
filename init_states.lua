@@ -27,20 +27,18 @@ function start_game()
     ship.yspeed = 0
     ship.spr_settings = {
         ship = {
-            frames = { 68, 66, 64, 66, 68 },
-            frames = { { 22, 32 }, { 11, 32 }, { 0, 32 }, { 11, 32 }, { 22, 32 }  },
+            frames = { { 20, 32 }, { 11, 32 }, { 0, 32 }, { 11, 32 }, { 20, 32 } },
             flips_x = { false, false, false, true, true },
-            flip_x = false,
             frame = 3,
             start = 3,
             stop = 3,
-            speed = 0.20,
+            speed = 0.15,
             loop = false,
             dir = 1,
-            sprx = -4,
+            sprs_x = { -1, -2, -4, -4, -2 },
             spry = -5,
-            sw = 11,
-            h = 2
+            sws = {6,9,11,9,6},
+            sh = 11
         },
         flame = {
             frames = { 5, 6, 7, 8 },
@@ -154,7 +152,7 @@ function start_game()
         -- { { "doublob, 25,-30,30", "mv,40,60", "st,500", "mv, 20,-20" }, { "st,60", "fire,0" } },
         -- { { "doublob, 30,-30,30", "mv,50,70", "st,60", "mv, 20,-20" }, { "st,60", "fire,0" } },
         -- { { "tenta1, 100,-30,150", "fire,30", "mv,100,30", "st,2000" }, { "st, 60", "fire, 0" } },
-        -- { { "beetle, 10,-30,150", "fire,40", "mv,60,30", "st,2000" }, { "st, 60", "fire, 0" } },
+        { { "beetle, 10,-30,150", "fire,40", "mv,60,30", "st,2000" }, { "st, 60", "fire, 0" } },
 
         -- { { "basic, 130,-30,220", "mv,80,50", "st,500", "mv, 20,-20" }, { "st,60", "fire,0" } },
         -- { { "basic, 130,-30,220", "mv,70,55", "st,500", "mv, 20,-20" }, { "st,60", "fire,0" } },

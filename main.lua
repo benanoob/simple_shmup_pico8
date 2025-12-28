@@ -1,4 +1,4 @@
-show_hb_flag = true
+show_hb_flag = false
 
 function _init()
     -- code to change palette

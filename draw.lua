@@ -411,6 +411,18 @@ function animate(setting)
         if setting.flips_y then
             setting.flip_y = setting.flips_y[flr(setting.frame)]
         end
+        if setting.sprs_x then
+            setting.sprx = setting.sprs_x[flr(setting.frame)]
+        end
+        if setting.sprs_y then
+            setting.spry = setting.sprs_y[flr(setting.frame)]
+        end
+        if setting.sws then
+            setting.sw = setting.sws[flr(setting.frame)]
+        end
+        if setting.shs then
+            setting.sh = setting.shs[flr(setting.frame)]
+        end
     end
 end
 
@@ -423,28 +435,29 @@ end
 function draw_obj(obj)
     for key, setting in pairs(obj.spr_settings) do
         if setting.w then
-        spr(
-            setting.spr,
-            obj.x + (setting.sprx or 0),
-            obj.y + (setting.spry or 0),
-            setting.w,
-            setting.h,
-            setting.flip_x,
-            setting.flip_y
-        )
-    else
-        sspr(
-            obj.spr[1],
-            obj.spr[2],
-            obj.sw,
-            obj.sh,
-            obj.x + (setting.sprx or 0),
-            obj.y + (setting.spry or 0),
-            obj.sw,
-            obj.sh,
-            obj.flip_x,
-            obj.flip_y
-        )
-    end
+            spr(
+                setting.spr,
+                obj.x + (setting.sprx or 0),
+                obj.y + (setting.spry or 0),
+                setting.w,
+                setting.h,
+                setting.flip_x,
+                setting.flip_y
+            )
+        else
+            pq(setting)
+            sspr(
+                setting.spr[1],
+                setting.spr[2],
+                setting.sw,
+                setting.sh,
+                obj.x + (setting.sprx or 0),
+                obj.y + (setting.spry or 0),
+                setting.sw,
+                setting.sh,
+                setting.flip_x,
+                setting.flip_y
+            )
+        end
     end
 end

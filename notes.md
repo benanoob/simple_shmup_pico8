@@ -13,11 +13,12 @@
 - [ ] animate flame for backward and forward motions (longer and shorter) ?
 - [ ] flame tweak ?
     - https://saint11.art/img/pixel-tutorials/RocketTrail.gif
-- [ ] awkward flame on turns
-    - [ ] awkmard ship on turns (linked)
+- improve ship animation
+    - we probably shouldn’t de full bank turn, doesnt look that good
 - [ ] program particles for ship engine
 - [ ] improve muzzle flash
     - see lizenn proposal, I can maybe program sth similar with a bunch of shrinking ovals
+    - could add some particle
 - [ ] fix big ass laser start
 - [ ] laser end when not hitting an enemy
 
@@ -26,6 +27,8 @@
     - may be incompatible with a meter/resource gated laser, let’s keep this simple
 
 ## done
+- [x] awkward flame on turns
+    - [x] awkmard ship on turns (linked)
 - [x] fix asteroid init (not drawn rn)
 - [x] bigger particle for laser impact
 - [x] add a parameter for explosion size linked to enemy size
@@ -306,4 +309,6 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
     - design new turn animation ship
     - todo
         - [ ] check if bullets 8x8 need 1 x offset when flipped to maintain position
-        - [ ] ship definitely needs this offset for the cockpit to stay in position
+        - [x] ship definitely needs this offset for the cockpit to stay in position
+## 28/12/2025
+- fix animation

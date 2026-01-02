@@ -84,8 +84,8 @@ function update_tenta1_canon(en)
     end
 end
 
-function fire_side_beetle(can_x, can_y, en, args)
-    for theta in all(args.thetas) do
+function fire_side_beetle(can_x, can_y, canon)
+    for theta in all(canon.thetas) do
         add(
             enemy_bullets,
             {
@@ -102,7 +102,25 @@ function fire_side_beetle(can_x, can_y, en, args)
     end
 end
 
-function fire_at_player(can_x, can_y, en, args)
+function fire_wave_bullets(can_x, can_y, canon)
+    for theta in all(canon.thetas) do
+        add(
+            enemy_bullets,
+            {
+                x = can_x,
+                y = can_y,
+                spx = cos(theta) * canon.speeds[canon.current_fire],
+                spy = sin(theta) * canon.speeds[canon.current_fire],
+                xb = 1,
+                yb = 1,
+                dmg = 1,
+                spr_settings = { bul_green1 }
+            }
+        )
+    end
+end
+
+function fire_at_player(can_x, can_y, canon)
     local theta = get_angle_player(can_x, can_y)
     add(
         enemy_bullets,
@@ -117,4 +135,32 @@ function fire_at_player(can_x, can_y, en, args)
             spr_settings = { bul_pink1 }
         }
     )
+end
+
+function fire_offset_bullets(can_x, can_y, canon)
+    add(
+        enemy_bullets,
+        {
+            x = can_x,
+            y = can_y,
+            spx = 0,
+            spy = 1,
+            xb = 1,
+            yb = 1,
+            dmg = 1,
+            spr_settings = { bul_pink1 }
+        }
+    )
+    pq(canon.index_x)
+    -- pq(canon.offs_x[canon.index_x])
+    canon.off_x = canon.offs_x[flr(canon.index_x)]
+    canon.index_x += canon.index_x_spd
+    if (canon.index_x_spd > 0 and canon.index_x > #canon.offs_x) then
+        canon.index_x_spd *= -1
+        canon.index_x = #canon.offs_x
+    end
+    if (canon.index_x_spd < 0 and canon.index_x < 1) then
+        canon.index_x_spd *= -1
+        canon.index_x = 1
+    end
 end

@@ -312,3 +312,5 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
         - [x] ship definitely needs this offset for the cockpit to stay in position
 ## 28/12/2025
 - fix animation
+## 02/01/2026
+- try pattern for waves

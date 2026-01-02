@@ -445,7 +445,6 @@ function draw_obj(obj)
                 setting.flip_y
             )
         else
-            pq(setting)
             sspr(
                 setting.spr[1],
                 setting.spr[2],

@@ -93,42 +93,65 @@ function load_enemy(enemy_table)
         en.yb = 15
         en.update_canon = nil
         en.canons = {
+            -- {
+            --     off_x = 0,
+            --     off_y = 6,
+            --     fire_rate = 12,
+            --     cooldown = 40,
+            --     num_fire = 3,
+            --     current_fire = 3,
+            --     t = 10,
+            --     fire_func = fire_side_beetle,
+            --         thetas = { 0.3, 0.4, 0.5, 0.6, 0.7 }
+            -- },
+            -- {
+            --     off_x = 13,
+            --     off_y = 6,
+            --     fire_rate = 12,
+            --     cooldown = 60,
+            --     num_fire = 3,
+            --     current_fire = 3,
+            --     t = 10,
+            --     fire_func = fire_side_beetle,
+            --         thetas = { 0.8, 0.9, 1, 0.1, 0.2, 0.3 }
+            -- },
             {
-                off_x = 0,
-                off_y = 6,
-                fire_rate = 12,
-                cooldown = 40,
-                num_fire = 3,
-                current_fire = 3,
-                t = 10,
-                fire_func = fire_side_beetle,
-                args_func = {
-                    thetas = { 0.3, 0.4, 0.5, 0.6, 0.7 }
-                }
-            },
-            {
-                off_x = 13,
-                off_y = 6,
-                fire_rate = 12,
+                off_x = 7,
+                off_y = 13,
+                fire_rate = 2,
                 cooldown = 60,
                 num_fire = 3,
                 current_fire = 3,
-                t = 10,
-                fire_func = fire_side_beetle,
-                args_func = {
-                    thetas = { 0.8, 0.9, 1, 0.1, 0.2, 0.3 }
-                }
+                t = 2,
+                fire_func = fire_wave_bullets,
+                speeds = { 1 / 1.3, 1, 1.3 },
+                thetas = { 0.65, 0.7, 0.75, 0.8, 0.85 }
             },
+
             {
-                off_x = 6,
-                off_y = 15,
-                fire_rate = 10,
+                off_x = 4,
+                off_y = 13,
+                fire_rate = 5,
                 cooldown = 60,
-                num_fire = 2,
-                current_fire = 2,
+                num_fire = 14,
+                current_fire = 14,
                 t = 5,
-                fire_func = fire_at_player
+                fire_func = fire_offset_bullets,
+                offs_x = { 4, 5, 6, 7, 8, 9, 10 },
+                thetas = { 0.7, 0.8 },
+                index_x_spd = 0.1,
+                index_x = 1
             }
+            -- {
+            --     off_x = 6,
+            --     off_y = 15,
+            --     fire_rate = 10,
+            --     cooldown = 60,
+            --     num_fire = 2,
+            --     current_fire = 2,
+            --     t = 5,
+            --     fire_func = fire_at_player
+            -- }
         }
     elseif en.type == "doublob" then
         en.spr_settings = {

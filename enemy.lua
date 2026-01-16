@@ -115,31 +115,30 @@ function load_enemy(enemy_table)
             --     fire_func = fire_side_beetle,
             --         thetas = { 0.8, 0.9, 1, 0.1, 0.2, 0.3 }
             -- },
-            {
-                off_x = 7,
-                off_y = 13,
-                fire_rate = 2,
-                cooldown = 60,
-                num_fire = 3,
-                current_fire = 3,
-                t = 2,
-                fire_func = fire_wave_bullets,
-                speeds = { 1 / 1.3, 1, 1.3 },
-                thetas = { 0.65, 0.7, 0.75, 0.8, 0.85 }
-            },
+            -- {
+            --     off_x = 7,
+            --     off_y = 13,
+            --     fire_rate = 2,
+            --     cooldown = 60,
+            --     num_fire = 3,
+            --     current_fire = 3,
+            --     t = 2,
+            --     fire_func = fire_wave_bullets,
+            --     speeds = { 1 / 1.3, 1, 1.3 },
+            --     thetas = { 0.65, 0.7, 0.75, 0.8, 0.85 }
+            -- },
 
             {
                 off_x = 4,
                 off_y = 13,
-                fire_rate = 5,
-                cooldown = 60,
-                num_fire = 14,
+                fire_rate = 4,
+                cooldown = 20,
+                num_fire = 10,
                 current_fire = 14,
                 t = 5,
                 fire_func = fire_offset_bullets,
-                offs_x = { 4, 5, 6, 7, 8, 9, 10 },
-                thetas = { 0.7, 0.8 },
-                index_x_spd = 0.1,
+                count_sine = 0,
+                spd_count_sine = 0.04,
                 index_x = 1
             }
             -- {

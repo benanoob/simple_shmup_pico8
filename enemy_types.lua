@@ -151,16 +151,9 @@ function fire_offset_bullets(can_x, can_y, canon)
             spr_settings = { bul_pink1 }
         }
     )
-    pq(canon.index_x)
-    -- pq(canon.offs_x[canon.index_x])
-    canon.off_x = canon.offs_x[flr(canon.index_x)]
-    canon.index_x += canon.index_x_spd
-    if (canon.index_x_spd > 0 and canon.index_x > #canon.offs_x) then
-        canon.index_x_spd *= -1
-        canon.index_x = #canon.offs_x
-    end
-    if (canon.index_x_spd < 0 and canon.index_x < 1) then
-        canon.index_x_spd *= -1
-        canon.index_x = 1
-    end
+
+    canon.count_sine += canon.spd_count_sine
+
+    canon.off_x = flr(20 * sin(canon.count_sine))
+    -- pq(canon.off_x)
 end

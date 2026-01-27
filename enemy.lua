@@ -246,6 +246,12 @@ function lerp_enemy(en, command)
     return false
 end
 
+function track_player(en,command)
+    local theta = get_angle_player(en.x,en.y)
+    en.x += cos(theta) * en.speed
+    en.x += sin(theta) * en.speed
+end
+
 function standby(en, command)
     return standby_helper(en.t, command.duration)
 end

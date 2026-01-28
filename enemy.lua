@@ -24,12 +24,11 @@ function load_enemy(enemy_table)
     en.delay_shot = 0
     en.fire_state = "stop_fire"
 
-    if en.type == "popcorn" then
-        en.spd = 0.15
+    if en.type == "square" then
+        en.spd = 0.7
         en.hp = 20
         en.xb = 8
         en.yb = 8
-        en.update_canon = nil
         en.spr_settings = {
             {
                 spr = 35,
@@ -40,7 +39,7 @@ function load_enemy(enemy_table)
                 spry = 0
             }
         }
-    elseif en.type == "basic" then
+    elseif en.type == "popcorn" then
         en.spr_settings = {
             {
                 spr = 36,
@@ -55,7 +54,16 @@ function load_enemy(enemy_table)
         en.hp = 10
         en.xb = 8
         en.yb = 8
-        en.update_canon = update_basic_canon
+        en.canons = {
+            off_x = 4,
+            off_y = 4,
+            fire_rate = 0,
+            cooldown = 40,
+            num_fire = 1,
+            current_fire = 1,
+            t = 5,
+            fire_func = fire_at_player,
+        }
     elseif en.type == "tenta1" then
         en.spr_settings = {
             {
@@ -73,7 +81,6 @@ function load_enemy(enemy_table)
         en.hp = 40
         en.xb = 13
         en.yb = 13
-        en.update_canon = update_tenta1_canon
     elseif en.type == "beetle" then
         en.spr_settings = {
             {
@@ -91,66 +98,39 @@ function load_enemy(enemy_table)
         en.hp = 40
         en.xb = 15
         en.yb = 15
-        en.update_canon = nil
         en.canons = {
-            -- {
-            --     off_x = 0,
-            --     off_y = 6,
-            --     fire_rate = 12,
-            --     cooldown = 40,
-            --     num_fire = 3,
-            --     current_fire = 3,
-            --     t = 10,
-            --     fire_func = fire_side_beetle,
-            --         thetas = { 0.3, 0.4, 0.5, 0.6, 0.7 }
-            -- },
-            -- {
-            --     off_x = 13,
-            --     off_y = 6,
-            --     fire_rate = 12,
-            --     cooldown = 60,
-            --     num_fire = 3,
-            --     current_fire = 3,
-            --     t = 10,
-            --     fire_func = fire_side_beetle,
-            --         thetas = { 0.8, 0.9, 1, 0.1, 0.2, 0.3 }
-            -- },
-            -- {
-            --     off_x = 7,
-            --     off_y = 13,
-            --     fire_rate = 2,
-            --     cooldown = 60,
-            --     num_fire = 3,
-            --     current_fire = 3,
-            --     t = 2,
-            --     fire_func = fire_wave_bullets,
-            --     speeds = { 1 / 1.3, 1, 1.3 },
-            --     thetas = { 0.65, 0.7, 0.75, 0.8, 0.85 }
-            -- },
-
             {
-                off_x = 4,
-                off_y = 13,
-                fire_rate = 4,
-                cooldown = 20,
-                num_fire = 10,
-                current_fire = 14,
-                t = 5,
-                fire_func = fire_offset_bullets,
-                count_sine = 0,
-                spd_count_sine = 0.04,
-                index_x = 1
+                off_x = 0,
+                off_y = -4,
+                fire_rate = 8,
+                cooldown = 30,
+                num_fire = 3,
+                current_fire = 3,
+                t = 10,
+                fire_func = fire_side_wall,
+                theta_offset = -0.04
+            },
+            {
+                off_x = 16,
+                off_y = -4,
+                fire_rate = 8,
+                cooldown = 30,
+                num_fire = 3,
+                current_fire = 3,
+                t = 10,
+                fire_func = fire_side_wall,
+                theta_offset = 0.04
+            },
+            {
+                off_x = 8,
+                off_y = 10,
+                fire_rate = 0,
+                cooldown = 60,
+                num_fire = 1,
+                current_fire = 1,
+                t = 10,
+                fire_func = fire_beetle_cluster
             }
-            -- {
-            --     off_x = 6,
-            --     off_y = 15,
-            --     fire_rate = 10,
-            --     cooldown = 60,
-            --     num_fire = 2,
-            --     current_fire = 2,
-            --     t = 5,
-            --     fire_func = fire_at_player
-            -- }
         }
     elseif en.type == "doublob" then
         en.spr_settings = {
@@ -173,7 +153,6 @@ function load_enemy(enemy_table)
         en.hp = 10
         en.xb = 8
         en.yb = 8
-        en.update_canon = update_basic_canon
     end
 
     for i = 2, #action_table do
@@ -191,6 +170,8 @@ function load_enemy(enemy_table)
             )
         elseif action[1] == "st" then
             add(seq, { type = "standby", duration = action[2] - 1, func = standby })
+        elseif action[1] == "track" then
+            add(seq, { type = "track", duration = action[2] - 1, func = track_player })
         end
     end
     add(
@@ -246,10 +227,14 @@ function lerp_enemy(en, command)
     return false
 end
 
-function track_player(en,command)
-    local theta = get_angle_player(en.x,en.y)
-    en.x += cos(theta) * en.speed
-    en.x += sin(theta) * en.speed
+function track_player(en, command)
+    if en.t == command.duration then
+        return true
+    end
+    local theta = get_angle_player(en.x, en.y)
+    en.x += cos(theta) * en.spd
+    en.y += sin(theta) * en.spd
+    return false
 end
 
 function standby(en, command)

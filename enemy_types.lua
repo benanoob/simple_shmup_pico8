@@ -84,6 +84,44 @@ function update_tenta1_canon(en)
     end
 end
 
+function fire_side_wall(can_x, can_y, canon)
+    if canon.current_fire == canon.num_fire then
+        canon.theta = get_angle_player(can_x, can_y) + canon.theta_offset
+    end
+    add(
+        enemy_bullets,
+        {
+            x = can_x,
+            y = can_y,
+            spx = cos(canon.theta) * 1.4,
+            spy = sin(canon.theta) * 1.4,
+            xb = 1,
+            yb = 1,
+            dmg = 1,
+            spr_settings = { bul_green1 }
+        }
+    )
+end
+
+function fire_beetle_cluster(can_x, can_y, canon)
+    local theta = get_angle_player(can_x, can_y)
+    for i = 1, 3 do
+        add(
+            enemy_bullets,
+            {
+                x = can_x,
+                y = can_y,
+                spx = cos(theta + rnd(0.05) - 0.025) * (0.7 + rnd(0.25)),
+                spy = sin(theta + rnd(0.05) - 0.025) * (0.7 + rnd(0.25)),
+                xb = 1,
+                yb = 1,
+                dmg = 1,
+                spr_settings = { bul_pink1 }
+            }
+        )
+    end
+end
+
 function fire_side_beetle(can_x, can_y, canon)
     for theta in all(canon.thetas) do
         add(

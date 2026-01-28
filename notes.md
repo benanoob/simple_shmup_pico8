@@ -1,13 +1,17 @@
 # todo
-- [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point ?
+- [ ] have movement defined by a timer rather than speed to guarantee you know the enemy will arrive at some point
     - check if traditional shmup have enemy movement speed consistency or not
     -  better for timeline anticipation
+    - Discussed with C. and M., it’s probably reasonable to be sloppy on movement speed to make it easier for me
 - [ ] add big laser hitbox with higher damage at start
 - [ ] fix hit impact stop animating on wave screen
 - [ ] manage player ship states with a state machine
     - [ ] lock main shot when laser
 - [ ] on hit blink of ship should be palette swap instead of disappearing
-- [ ] implement player tracking pop corn (kamikaze)
+- [ ] build a gameplay encounter
+    - [x] build 1 big ennemy
+    - [ ] implement player tracking pop corn (kamikaze)
+    - [ ] implement popcorn firing at player at low fire rate
 
 ## polish
 - [ ] animate flame for backward and forward motions (longer and shorter) ?
@@ -314,3 +318,9 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
 - fix animation
 ## 02/01/2026
 - try pattern for waves
+## 28/01/2026
+- big enemy design
+    - i wanna create a funnel for the player, classic
+    - i need to be able to lock the theta computed at the player and only recompute it after the big cooldown because fully tracking shot is not the effect I’m looking for here.
+- popcorn enemy doesn’t fire
+- [ ] do the gameplay sequence

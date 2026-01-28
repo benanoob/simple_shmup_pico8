@@ -48,12 +48,6 @@ function update_game()
             end
         end
         if en.fire_state == "fire" then
-            if en.update_canon and en.delay_shot <= 0 then
-                en.update_canon(en)
-            else
-                en.delay_shot -= 1
-            end
-
             for canon in all(en.canons) do
                 if canon.t == 0 then
                     canon.fire_func(en.x + canon.off_x, en.y + canon.off_y, canon)

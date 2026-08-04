@@ -39,6 +39,7 @@ function load_enemy(enemy_table)
                 spry = 0
             }
         }
+
     elseif en.type == "popcorn" then
         en.spr_settings = {
             {
@@ -54,7 +55,7 @@ function load_enemy(enemy_table)
         en.hp = 10
         en.xb = 8
         en.yb = 8
-        en.canons = {
+        en.canons = {{
             off_x = 4,
             off_y = 4,
             fire_rate = 0,
@@ -63,7 +64,8 @@ function load_enemy(enemy_table)
             current_fire = 1,
             t = 5,
             fire_func = fire_at_player,
-        }
+        }}
+
     elseif en.type == "tenta1" then
         en.spr_settings = {
             {
@@ -81,6 +83,7 @@ function load_enemy(enemy_table)
         en.hp = 40
         en.xb = 13
         en.yb = 13
+
     elseif en.type == "beetle" then
         en.spr_settings = {
             {
@@ -132,6 +135,7 @@ function load_enemy(enemy_table)
                 fire_func = fire_beetle_cluster
             }
         }
+
     elseif en.type == "doublob" then
         en.spr_settings = {
             {

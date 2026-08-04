@@ -324,3 +324,5 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
     - i need to be able to lock the theta computed at the player and only recompute it after the big cooldown because fully tracking shot is not the effect I’m looking for here.
 - popcorn enemy doesn’t fire
 - [ ] do the gameplay sequence
+## 04/08/2026
+- pop corn now fires dont forget to put the bullets in a list (support for enemies with multiple canons)

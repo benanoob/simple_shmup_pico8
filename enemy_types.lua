@@ -44,14 +44,35 @@ function update_basic_canon(en)
     en.delay_shot = 60
 end
 
-function update_tenta1_canon(en)
+function fire_double_shot(can_x, can_y, canon)
+    -- target player double shot
+
+    for j = 1, 2 do
+        local theta = get_angle_player(can_x, can_y)
+        add(
+            enemy_bullets,
+            {
+                x = can_x + canon.off_x,
+                y = can_y + canon.off_y,
+                xb = 1,
+                yb = 1,
+                dmg = 1,
+                spr_settings = { bul_pink1 },
+                spx = cos(theta + canon.theta_offset[j]),
+                spy = sin(theta + canon.theta_offset[j])
+            }
+        )
+    end
+end
+
+function fire_random_circ(can_x, can_y, canon)
     -- random circular shot, occupy space
     for i = 1, 10 do
         local theta = rnd()
         for j = 1, 4 do
             local bul = {
-                x = en.x + j * 2 * cos(theta),
-                y = en.y + j * 2 * sin(theta),
+                x = can_x + j * 2 * cos(theta),
+                y = can_y + j * 2 * sin(theta),
                 xb = 1,
                 yb = 1,
                 dmg = 1,
@@ -62,25 +83,6 @@ function update_tenta1_canon(en)
             add(bul.spr_settings, bul_pink1)
             add(enemy_bullets, bul)
         end
-    end
-    en.delay_shot = 100
-
-    -- target player double shot
-    local offset_theta = { 0.025, -0.025 }
-    for j = 1, 2 do
-        local bul = {
-            x = en.x + 8,
-            y = en.y + 1,
-            xb = 1,
-            yb = 1,
-            dmg = 1,
-            spr_settings = {}
-        }
-        add(bul.spr_settings, bul_pink1)
-        local theta = get_angle_player(bul.x, bul.y)
-        bul.spx = cos(theta + offset_theta[j]) * 1
-        bul.spy = sin(theta + offset_theta[j]) * 1
-        add(enemy_bullets, bul)
     end
 end
 

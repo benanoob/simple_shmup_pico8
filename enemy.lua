@@ -55,7 +55,7 @@ function load_enemy(enemy_table)
         en.hp = 10
         en.xb = 8
         en.yb = 8
-        en.canons = {{
+        en.canons = { {
             off_x = 4,
             off_y = 4,
             fire_rate = 0,
@@ -64,15 +64,13 @@ function load_enemy(enemy_table)
             current_fire = 1,
             t = 5,
             fire_func = fire_at_player,
-        }}
+        } }
 
     elseif en.type == "tenta1" then
         en.spr_settings = {
             {
                 spr = 37,
                 frame = 1,
-                sprx = 0,
-                spry = 0,
                 w = 2,
                 h = 2,
                 sprx = 0,
@@ -83,14 +81,36 @@ function load_enemy(enemy_table)
         en.hp = 40
         en.xb = 13
         en.yb = 13
+        en.canons = {
+            {
+                off_x = 0,
+                off_y = 0,
+                fire_rate = 8,
+                cooldown = 100,
+                num_fire = 1,
+                current_fire = 1,
+                t = 10,
+                fire_func = fire_random_circ,
+            },
+
+            {
+                off_x = 0,
+                off_y = 0,
+                fire_rate = 1,
+                cooldown = 40,
+                num_fire = 4,
+                current_fire = 1,
+                t = 10,
+                fire_func = fire_double_shot,
+                theta_offset = {0.025, -0.025}
+            }
+        }
 
     elseif en.type == "beetle" then
         en.spr_settings = {
             {
                 spr = 39,
                 frame = 1,
-                sprx = 0,
-                spry = 0,
                 w = 2,
                 h = 2,
                 sprx = 0,

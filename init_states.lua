@@ -45,7 +45,6 @@ function start_game()
             frame = 1,
             start = 1,
             stop = 4,
-            frame = 1,
             loop = true,
             speed = 0.12,
             sprx = 4 - 6,
@@ -70,7 +69,6 @@ function start_game()
         spr_settings = {
             laser_end = {
                 frames = { 133, 136 },
-                frame = 1,
                 start = 1,
                 stop = 2,
                 frame = 1,
@@ -148,6 +146,7 @@ function start_game()
 
     smart_enemies = {
         -- { { "beetle, 10,-30,150", "mv,60,30", "st,2000" }, { "st, 60", "fire, 0" } },
+        { { "tenta1, 10,-30,150", "mv,60,30", "st,2000" }, { "st, 60", "fire, 0" } },
         { { "square, 10,-30,150", "track,-1" }, {} },
         { { "popcorn, 100, -20,30", "mv,90,40", "st,2000" }, { "st, 20", "fire, 0" } }
     }

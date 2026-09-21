@@ -10,8 +10,8 @@
 - [ ] on hit blink of ship should be palette swap instead of disappearing
 - [ ] build a gameplay encounter
     - [x] build 1 big ennemy
-    - [ ] implement player tracking pop corn (kamikaze)
-    - [ ] implement popcorn firing at player at low fire rate
+    - [x] implement player tracking pop corn (kamikaze)
+    - [x] implement popcorn firing at player at low fire rate
 
 ## polish
 - [ ] animate flame for backward and forward motions (longer and shorter) ?
@@ -309,11 +309,11 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
     - make canon rotate
     - TODO: implement code by canon, not sure how to generalize more at this point, will see after a few enemy implemented
 ## 26/12/2025
-    - start implementing new fire system
-    - design new turn animation ship
-    - todo
-        - [ ] check if bullets 8x8 need 1 x offset when flipped to maintain position
-        - [x] ship definitely needs this offset for the cockpit to stay in position
+- start implementing new fire system
+- design new turn animation ship
+- todo
+    - [ ] check if bullets 8x8 need 1 x offset when flipped to maintain position
+    - [x] ship definitely needs this offset for the cockpit to stay in position
 ## 28/12/2025
 - fix animation
 ## 02/01/2026
@@ -326,3 +326,8 @@ prop.y_spawn = prop.radius * sin(prop.thet_bul)
 - [ ] do the gameplay sequence
 ## 04/08/2026
 - pop corn now fires dont forget to put the bullets in a list (support for enemies with multiple canons)
+## 17/08/2026
+## 03/09/2026
+## 04/09/2026
+- [ ] colorswap in sprite system
+- [ ] udpate tenta fire code
